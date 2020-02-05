@@ -2,6 +2,7 @@
 #include <string>
 
 using namespace std;
+
 typedef char Data;
 
 typedef struct Node {
@@ -9,46 +10,42 @@ typedef struct Node {
 	struct Node* next;
 }node;
 
-
-class Stack {
+class Queue {
 private:
 	node* front;
-public:
+	node* rear;
 
-	Stack() {
-		front = NULL;
+public:
+	Queue() {
+		front = rear = NULL;
 	}
 	bool empty() {
-		return front == NULL;
+		return (front == NULL && rear==NULL);
 	}
-	void push(Data d) {
-
+	void enqueue(Data d) {
+	
 		node* temp = new node();
 		temp->data = d;
-		temp->next = front;
-
-		front = temp;
-
-	}
-
-	void pop() {
-		if (empty())
+		temp->next = NULL;
+	
+		if (empty()) {
+			front = back=temp;
 			return;
-
-		Data num = front->data;
-		front = front->next;
-
-
+		}
+		rear->next = temp;
+		rear = temp;
 	}
-
-	Data top() {
+	Data dequeue() {
+		
 		if (empty())
 			return -1;
-		else {
-			return front->data;
-		}
-	}
 
+		node* temp = front;
+
+		front = front->next;
+		free(temp);
+
+	}
 	int size() {
 		int count = 1;
 		if (empty()) {
@@ -62,56 +59,51 @@ public:
 		}
 		return count;
 	}
+	Data front() { //먼저나올애
+		if (empty())
+			return -1;
+
+		return front->data;
+	}
+	Data back() {// 
+		if (empty()) 
+			return -1;
+
+		return rear->data;
+	}
 
 };
 
+
 int main() {
 
-	while (1) {
+	int num;
+	cin >> num;
 
-		string str;
-		getline(cin, str);
-		
-		int len = (int)str.length();
-		Stack stack;
-		bool flag = true;
+	Queue queue;
+	string str;
 
-		if (str[0] == '.')
-			break;
+	for (int i = 0; i < num; i++) {
+		cin >> str;
 
-		for (int i = 0; i < len; i++) {
-
-			if (str[i] == '(')
-				stack.push(str[i]);
-			else if (str[i] == '[')
-				stack.push(str[i]);
-			else if (str[i] == ')') {
-				if (!stack.empty() && stack.top() == '(') {
-					stack.pop();
-				}
-				else {
-					flag = false;
-					break;
-				}
-			}
-
-			else if (str[i] == ']') {
-				if (!stack.empty() && stack.top() == '[') {
-					stack.pop();
-				}
-				else {
-					flag = false;
-					break;
-				}
-			}
-			
+		if (str == "push") {
+			int n;
+			cin >> n;
+			queue.enqueue(n);
 		}
-		if (flag && stack.empty()) {
-			cout << "yes" << endl;
+		else if (str == "pop") {
+			print("%d\n", queue.dequeue());
 		}
-		else {
-			cout << "no" << endl;
+		else if (str == "front") {
+			printf("%d\n", queue.back());
 		}
+		else if (str == "back") {
+			printf("%d\n", queue.front());
+		}
+		else if (str == "empty")
+			printf("%d\n", queue.empty());
+		else if (str == "size")
+			printf("%d\n", queue.size());
 	}
 
 }
