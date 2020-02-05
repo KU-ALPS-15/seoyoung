@@ -84,7 +84,7 @@ int main() {
 		queue.dequeue();
 
 		if (!queue.empty())
-			cout << ",";
+			cout << ", ";
 	}
 	cout << ">";
 
