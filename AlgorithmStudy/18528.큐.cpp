@@ -3,8 +3,10 @@
 
 using namespace std;
 
+typedef char Data;
+
 typedef struct Node {
-	int data;
+	Data data;
 	struct Node* next;
 }node;
 
@@ -20,7 +22,7 @@ public:
 	bool empty() {
 		return front == NULL;
 	}
-	void enqueue(int d) {
+	void enqueue(Data d) {
 
 		node* temp = new node();
 		temp->data = d;
@@ -33,15 +35,14 @@ public:
 		rear->next = temp;
 		rear = temp;
 	}
-
 	int dequeue() {
 
 		if (empty())
 			return -1;
 
-		int data = front->data;
+		int dedata = front->data;
 		front = front->next;
-		return data;
+		return dedata;
 
 	}
 	int size() {
@@ -57,35 +58,51 @@ public:
 		}
 		return count;
 	}
-	int frontq() {
+	Data frontq() { //먼저나올애
+		if (empty())
+			return -1;
+
 		return front->data;
+	}
+	Data backq() {// 
+		if (empty())
+			return -1;
+
+		return rear->data;
 	}
 
 };
 
 
 int main() {
-	int n, k;
-	cin >> n >> k;
+
+	int num;
+	cin >> num;
 
 	Queue queue;
+	string str;
 
-	for (int i = 1; i <= n; i++) {
-		queue.enqueue(i);
-	}
-	cout << "<";
+	for (int i = 0; i < num; i++) {
+		cin >> str;
 
-	while (!queue.empty()) {
-		for (int i = 1; i < k; i++) {
-			queue.enqueue(queue.frontq());
-			queue.dequeue();
+		if (str == "push") {
+			int n;
+			cin >> n;
+			queue.enqueue(n);
 		}
-		cout << queue.frontq();
-		queue.dequeue();
-
-		if (!queue.empty())
-			cout << ",";
+		else if (str == "pop") {
+			cout << queue.dequeue() << '\n';
+		}
+		else if (str == "front") {
+			cout<<queue.frontq()<< '\n';
+		}
+		else if (str == "back") {
+			cout<<queue.backq()<< '\n';
+		}
+		else if (str == "empty")
+			cout << queue.empty() << '\n';
+		else if (str == "size")
+			cout<<queue.size()<< '\n';
 	}
-	cout << ">";
 
 }
