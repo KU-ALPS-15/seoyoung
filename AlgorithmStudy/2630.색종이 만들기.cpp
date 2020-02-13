@@ -1,43 +1,46 @@
 #include<iostream>
 
 using namespace std;
-//2740.Çà·Ä °ö¼À 
 
-const int MAX = 100;
+int wCount;
+int bCount;
+int arr[129][129];
 
-int arr1[MAX][MAX], arr2[MAX][MAX];
-int result[MAX][MAX];
-int main() {
-
-	int N, M, K;
-	cin >> N >> M;
+void findcolor(int n, int top1,int top2) {
 	
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < M; j++) {
-			cin >> arr1[i][j];
-		}
-	}
+	int first = arr[top1][top2];
 
-	cin >>M>> K;
-
-	for (int i = 0; i < M; i++) {
-		for (int j = 0; j < K; j++) {
-			cin >> arr2[i][j];
-		}
-	}
-
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < K; j++) {
-			for (int r = 0; r < M; r++) {
-				result[i][j] += (arr1[i][r] * arr2[r][j]);
+	for (int i = top1; i < top1+n; i++) {
+		for (int j = top2; j < top2+n; j++) {
+			if (arr[i][j] != first) {
+				findcolor(n / 2, top1, top2);
+				findcolor(n / 2, top1 + n / 2, top2);
+				findcolor(n / 2, top1, top2 + n / 2);
+				findcolor(n / 2, top1 + n / 2, top2 + n / 2);
+				return;
 			}
 		}
 	}
-
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < K; j++) {
-			cout << result[i][j]<<" ";
-		}
-		cout << '\n';
+	if (first == 1)
+		bCount++;
+	else {
+		wCount++;
 	}
+}
+
+int main() {
+	int n;
+	cin >> n; 
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			cin >> arr[i][j];
+		}
+	}
+
+	findcolor(n,0,0);
+
+	cout << wCount << endl << bCount << endl;
+	return 0;
+
 }
