@@ -1,7 +1,7 @@
 #include<iostream>
 
 using namespace std;
-//2740.Çà·Ä °ö¼À 
+//2740.Ã‡Ã Â·Ã„ Â°Ã¶Â¼Ã€ 
 
 const int MAX = 100;
 
