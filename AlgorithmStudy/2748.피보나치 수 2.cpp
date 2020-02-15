@@ -1,18 +1,19 @@
 #include <iostream>
 
 using namespace std;
+int n;
+long long arr[91];
 
-const int mod = 100000;
-const int p = 1500000;
-int main() {
-	long long n;
-	cin >> n;
-	long arr[p] = { 0,1 };
-	for (int i = 0; i < p; i++) {
-		arr[i] = (arr[i - 2]%mod + arr[i - 1]%mod);
+long long Fibo(int n, long long arr[91]) {
+	arr[0] = 0;
+	arr[1] = 1;
+	for (int i = 2; i <= n; i++) {
+		arr[i] = arr[i - 1] + arr[i - 2];
 	}
-
-	cout << arr[n % p] << '\n';
-	
+	return arr[n];
+}
+int main() {
+	cin >> n;
+	cout<<Fibo(n, arr)<<'\n';
 
 }
