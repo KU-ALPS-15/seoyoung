@@ -22,7 +22,7 @@ public:
 		min_value = 0;
 
 		for (int i = 0; i < n; i++) {
-			for (int j = 0; j<= i; j++) {
+			for (int j = 0; j <= i; j++) {
 				min_value += person[j];
 			}
 		}
@@ -32,5 +32,5 @@ public:
 
 int main() {
 	ATM atm;
-	cout << atm.result()<< '\n';
+	cout << atm.result() << '\n';
 }
